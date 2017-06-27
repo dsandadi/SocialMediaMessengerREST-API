@@ -1,0 +1,5 @@
+package sand.messenger.Exceptions;
+
+public class DataNotFoundException {
+
+}

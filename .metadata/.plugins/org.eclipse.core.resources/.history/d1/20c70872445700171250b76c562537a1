@@ -1,0 +1,12 @@
+package sandadi.messenger.database;
+
+import java.util.HashMap;
+
+import sandadi.messenger.model.Message;
+
+public class Database {
+	
+	public static HashMap<Long,Message> messages = new HashMap<>();
+	public static HashMap<Long,Profile> profiles = new HashMap<>();
+
+}

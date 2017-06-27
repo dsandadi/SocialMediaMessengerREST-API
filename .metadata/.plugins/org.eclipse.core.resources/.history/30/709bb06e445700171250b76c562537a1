@@ -1,0 +1,5 @@
+package sandadi.messenger.database;
+
+public class Database {
+
+}

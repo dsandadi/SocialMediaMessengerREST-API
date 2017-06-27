@@ -1,0 +1,58 @@
+package sandadi.messenger.service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import sandadi.messenger.database.Database;
+import sandadi.messenger.model.Message;
+
+public class MessageService {
+	
+	private HashMap<Long,Message> messages = Database.messages;
+	public MessageService()
+	{
+		messages.put(1L,new Message("Hello world!",1,"Dinesh Sandadi"));
+		messages.put(2L,new Message("Hello dinesh !",2,"Sandadi"));
+	}
+	
+	public List<Message> getAllMessages(){
+		return new ArrayList<Message>(messages.values());
+	}
+	
+	public Message addMessage(Message b)
+	{
+		b.setId(messages.size()+1);
+		messages.put(b.getId(),b);
+		return b;
+	}
+	
+	public Message getMessage(long id)
+	{	
+		for(Map.Entry<Long,Message> val:messages.entrySet())
+		{
+			System.out.println(messages.values());
+		}
+		return messages.get(id);
+	
+	}
+	public Message updateMessage(Message message)
+	{
+		if(message.getId()<= 0) return null;
+		System.out.println(message.getId());
+		System.out.println(message.getMessage());
+		messages.put(message.getId(), message);
+		System.out.println("Values");
+		System.out.println(messages.get(message.getId()).getMessage());
+//		System.out.println(message.getMessage());
+
+		return messages.get(message.getId());
+			
+	}
+	public Message removeMessage(long id)
+	{
+		return messages.remove(id); 
+	}
+	
+}

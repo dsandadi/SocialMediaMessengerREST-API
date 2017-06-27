@@ -1,0 +1,41 @@
+package sandadi.messenger.service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import sandadi.messenger.database.Database;
+import sandadi.messenger.model.Comment;
+import sandadi.messenger.model.Message;
+
+public class CommentService {
+
+	private HashMap<Long, Message> messages = Database.messages;
+
+	public List<Comment> getAllComments(long messageID) {
+		Map<Long, Comment> comments = messages.get(messageID).getComments();
+
+		return new ArrayList<Comment>(comments.values());
+	}
+
+	public Comment addComment(long messageID, Comment comment) {
+		Map<Long, Comment> comments = messages.get(messageID).getComments();
+		comment.setId(comments.size() + 1);
+		comments.put(comment.getId(), comment);
+		return comments.get(comment.getId());
+	}
+
+	public Comment updateComment(long messageID, Comment comment) {
+		Map<Long, Comment> comments = messages.get(messageID).getComments();
+		comments.put(comment.getId(), comment);
+		return comments.get(comment.getId());
+	}
+	
+	public Comment removeComment(long messageID,long commentID){
+		Map<Long,Comment> comments = messages.get(messageID)
+										.getComments();
+		comments.remove(commentID);
+		
+			}
+}

@@ -1,0 +1,14 @@
+package sandadi.messenger.model;
+
+import java.util.Date;
+
+public class Comment {
+	private long id;
+	private String author;
+	private Date created;
+	private String comment;
+	public Comment(){
+		
+	}
+	
+}

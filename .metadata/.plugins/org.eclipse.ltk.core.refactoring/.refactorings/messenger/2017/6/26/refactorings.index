@@ -1,0 +1,4 @@
+1498479921954	Move compilation unit
+1498480095050	Move compilation unit
+1498480356583	Rename type 'GenericException'
+1498564682174	Extract method 'getUriSelf'

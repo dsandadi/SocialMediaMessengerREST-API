@@ -1,0 +1,29 @@
+package sandadi.messenger.service;
+
+import java.util.HashMap;
+import sandadi.messenger.database.Database;
+import sandadi.messenger.model.Profile;
+
+public class ProfileService {
+	private HashMap<String,Profile> profiles = Database.profiles;
+	
+	public ProfileService()
+	{
+		profiles.put("Sandadi",new Profile("Dinesh",1,22));
+	}
+	public Profile addProfile(Profile p)
+	{
+		p.setId(profiles.size()+1);
+		profiles.put(p.getName(),p);
+		return p;
+	}
+	
+	public Profile updateProfile(Profile p)
+	{
+		if(p.getId() <= 0) return null;
+		profiles.put(p.getName(), p);
+		return p;
+	}
+	
+
+}

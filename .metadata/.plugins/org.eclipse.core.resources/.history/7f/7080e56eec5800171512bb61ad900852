@@ -1,0 +1,23 @@
+package sandadi.messenger.resources;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+
+@Path("/")
+public class CommentResource {
+@GET
+public String test(){
+	return "new subResource created";
+}
+@GET
+@Path("/{commentId}")
+public String test2(@PathParam("messageId") String messageId
+		,@PathParam("commentId") String commentId)
+{
+	return "new subResource created"+commentId+"With message id"+
+				messageId;
+}
+
+
+}

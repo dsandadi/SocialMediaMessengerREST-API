@@ -1,0 +1,43 @@
+package sandadi.messenger.service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import sandadi.messenger.database.Database;
+import sandadi.messenger.model.Message;
+
+public class MessageService {
+	
+	private HashMap<Long,Message> messages = Database.messages;
+	
+	public List<Message> getAllMessages(){
+		return new ArrayList<Message>(messages.values());
+	}
+	
+	public Message addMessage(Message b)
+	{
+		b.setId(messages.size()+1);
+		messages.put(b.getId(),b);
+		return b;
+	}
+	
+	public Message getMessage(long id)
+	{
+		return messages.get(id);
+	
+	}
+	public Message updateMessage(Message message)
+	{
+		if(message.getId()<= 0) return null;
+		
+			messages.put(message.getId(), message);
+			return messages.get(message.getId());
+			
+	}
+	public Message removeMessage(long id)
+	{
+		return messages.remove(id); 
+	}
+	
+}

@@ -1,0 +1,17 @@
+package sandadi.messenger.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import sandadi.messenger.model.Message;
+
+public class MessageService {
+	
+	public List<Message> getMessages(){
+		List<Message> a= new ArrayList<>();
+		a.add(new Message("Hello world!",1,"Dinesh"));
+		a.add(new Message("Hello Rest!",2,"Sandadi"));
+	return a;
+	}
+	
+}

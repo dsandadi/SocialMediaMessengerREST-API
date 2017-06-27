@@ -1,0 +1,87 @@
+package sandadi.messenger.resources;
+
+import java.net.URI;
+import java.util.List;
+
+import javax.ws.rs.BeanParam;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.UriInfo;
+
+import sandadi.messenger.model.Message;
+import sandadi.messenger.resources.bean.MessageFilterBean;
+import sandadi.messenger.service.MessageService;
+
+@Path("/messages")
+@Produces(MediaType.APPLICATION_JSON)
+public class MessengerResources {
+	MessageService s = new MessageService();
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Message> getMessage(@BeanParam MessageFilterBean m)
+
+	{
+		if(m.getYear()>0) 
+			return s.getMessagesInYear(m.getYear());
+		/**/
+		return s.getAllMessages();
+	}
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addMessage(Message message,@Context UriInfo UriInfo)
+	{
+		Message newMessage = s.addMessage(message); 
+		String newId = String.valueOf(newMessage.getId());
+		URI uri = UriInfo.getAbsolutePathBuilder().path(newId).build();
+		
+		return Response.created(uri).entity(newMessage).build();
+		
+	}
+	
+	@PUT
+	@Path("/{messageId}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Message updateMessage(@PathParam("messageId") long id,
+									Message message)
+	{
+		message.setId(id);
+		return s.updateMessage(message);
+	
+	}
+	@DELETE
+	@Path("/{messageId}")
+	public void deleteMessage(@PathParam("messageId") long id){
+		s.removeMessage(id);
+	}
+	
+	@Path("/{messageId}")
+	@GET
+	
+	public Message getMessage(@PathParam("messageId")long id){
+	
+		return s.getMessage(id);
+	
+	}
+	
+	@Path("/{messageId}/comments")
+	public CommentResource getCommentResource()
+	{
+		return new CommentResource();
+	}
+	
+}

@@ -1,0 +1,5 @@
+package sandadi.messenger.model;
+
+public class ErrorMessage {
+
+}

@@ -1,0 +1,75 @@
+package sandadi.messenger.service;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import sand.messenger.Exceptions.DataNotFoundException;
+import sandadi.messenger.database.Database;
+import sandadi.messenger.model.Message;
+
+public class MessageService {
+
+	private HashMap<Long, Message> messages = Database.messages;
+
+	public MessageService() {
+		messages.put(1L, new Message("Hello world!", 1, "Dinesh Sandadi"));
+		messages.put(2L, new Message("Hello dinesh !", 2, "Sandadi"));
+	}
+
+	public List<Message> getMessagesInYear(int year) {
+		List<Message> messages = new ArrayList<>();
+		Calendar c = Calendar.getInstance();
+		for (Message m : this.messages.values()) {
+			c.setTime(m.getCreated());
+			if (c.get(Calendar.YEAR) == year)
+				messages.add(m);
+		}
+
+		return messages;
+	}
+
+	public List<Message> getMessagesFrom(int start, int size) {
+		List<Message> messages = new ArrayList<>(this.messages.values());
+		if (start + size > messages.size())
+			return new ArrayList<Message>();
+		
+		return messages.subList(start, start + size);
+	}
+
+	public List<Message> getAllMessages() {
+		return new ArrayList<Message>(messages.values());
+	}
+
+	public Message addMessage(Message b) {	
+		b.setId(messages.size() + 1);
+		messages.put(b.getId(), b);
+		return b;
+	}
+
+	public Message getMessage(long id) {
+		Message message = messages.get(id);
+		if(message == null) 
+			{throw new DataNotFoundException("Message with id "+ id+"not found");
+			}
+			return message;
+
+	}
+
+	public Message updateMessage(Message message) {
+		if (message.getId() <= 0)
+			return null;
+
+		messages.put(message.getId(), message);
+
+		return messages.get(message.getId());
+
+	}
+
+	public Message removeMessage(long id) {
+		return messages.remove(id);
+	}
+
+}
